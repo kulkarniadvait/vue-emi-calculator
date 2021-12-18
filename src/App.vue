@@ -1,28 +1,43 @@
 <template>
-  <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
-  </div>
+  <v-app>
+    <v-app-bar dense app color="primary" dark> </v-app-bar>
+
+    <v-main>
+      <v-row>
+        <v-col cols="6"><Form /></v-col>
+        <v-col cols="6"><PieChart /></v-col>
+      </v-row>
+      <Table />
+    </v-main>
+  </v-app>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import Form from "./components/Form.vue";
+import PieChart from "./components/PieChart.vue";
+import Table from "./components/Table.vue";
 
 export default {
-  name: 'App',
+  name: "App",
+
   components: {
-    HelloWorld
-  }
-}
+    Form,
+    PieChart,
+    Table,
+  },
+
+  data: () => ({
+    //
+  }),
+};
 </script>
 
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+* {
+  font-family: "Raleway", sans-serif !important;
+}
+
+.v-subheader {
+  font-weight: 600;
 }
 </style>
