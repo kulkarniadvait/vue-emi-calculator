@@ -3,19 +3,19 @@
     <v-card outlined max-width="70%" class="pa-6">
       <v-card-title class="indigo--text font-weight-bold">Results</v-card-title>
       <div>
-        <v-subheader>Loan EMI : {{ getEMI }}</v-subheader>
+        <v-subheader>Loan EMI : {{ getEMI.toFixed(2) }}</v-subheader>
       </div>
       <div>
         <v-subheader
           >Total Interest :
-          {{ getTotalInterest.toLocaleString("en-IN") }}</v-subheader
+          {{ getTotalInterest.toFixed(2).toLocaleString("en-IN") }}</v-subheader
         >
       </div>
 
       <div>
         <v-subheader
           >Total Amount :
-          {{ getTotalAmount.toLocaleString("en-IN") }}</v-subheader
+          {{ getTotalAmount.toFixed(2).toLocaleString("en-IN") }}</v-subheader
         >
       </div>
       <hr class="my-4" />

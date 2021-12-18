@@ -21,29 +21,29 @@ export default new Vuex.Store({
   actions: {
     updatePNR({ commit }, pnr) {
       commit("SET_PNR", pnr);
-      console.log(pnr);
+      // console.log(pnr);
     },
   },
   getters: {
     getEMI: (state) => {
-      const monthlyROI = state.intRate / 12 / 100;
-      const emi =
-        state.principal *
-        monthlyROI *
-        (((1 + monthlyROI) ^ state.tenure) /
-          (((1 + monthlyROI) ^ state.tenure) - 1));
-      return emi.toFixed(2);
+      let monthlyROI = state.intRate / 12 / 100;
+      // console.log(monthlyROI);
+      let factor = (1 + monthlyROI) ** state.tenure;
+      // console.log("factor is ", factor);
+      // console.log("principal is ", state.principal);
+      let denom = factor / (factor - 1);
+      let emi = state.principal * monthlyROI * denom;
+
+      return emi;
     },
-    getTotalInterest: (state) => {
-      return (state.principal * state.intRate * state.tenure) / 100;
+    getTotalInterest: (state, getters) => {
+      return getters.getTotalAmount - state.principal;
     },
-    getTotalAmount: (state) => {
-      return (
-        (state.principal * state.intRate * state.tenure) / 100 + state.principal
-      );
+    getTotalAmount: (state, getters) => {
+      return getters.getEMI * state.tenure;
     },
     getTableRows: (state, getters) => {
-      const toPay = getters.getTotalAmount / state.tenure;
+      const toPay = getters.getEMI;
       let day = dayjs().add(-1, "month");
       let rows = [];
       let currentbalance = getters.getTotalAmount;
@@ -57,6 +57,7 @@ export default new Vuex.Store({
           ptd: ((amtPaid / getters.getTotalAmount) * 100).toFixed(2) + "%",
         });
         currentbalance = currentbalance - toPay;
+        // console.log("/n amtpaid", amtPaid);
         amtPaid = amtPaid + toPay;
       }
       return rows;
